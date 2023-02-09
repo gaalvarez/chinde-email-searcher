@@ -1,2 +1,7 @@
 .DS_Store
 .terraform/
+mail-indexer/cpu_np.prof
+mail-indexer/cpu.prof
+mail-indexer/mem.prof
+mail-indexer/mem_np.prof
+mail-indexer/mail-indexer.test

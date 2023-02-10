@@ -19,7 +19,7 @@ class MailApi extends HttpClient {
 
   public constructor() {
     super(
-      import.meta.env.VITE_APP_BACKEND_API_URL || "http://localhost:8080/mail"
+      import.meta.env.VITE_APP_BACKEND_API_URL || `http://${window.location.origin}:8080/mail`
     );
   }
 

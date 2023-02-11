@@ -5,12 +5,13 @@ import (
 	"galvarezl/mail-indexer/files"
 	"galvarezl/mail-indexer/indexer"
 	"galvarezl/mail-indexer/parser"
+	"os"
 	"sync"
 	"time"
 )
 
 // create const for the root directory
-const root = "/Users/gustavoalvarez/Documents/personal/Truora/enron_mail_20110402/maildir/"
+var root = os.Getenv("ENRON_ROOT_FOLDER")
 
 func main() {
 	start := time.Now()
@@ -23,8 +24,10 @@ func main() {
 			filePaths := files.FilePaths(root + folder)
 			emailTextList := files.ReadFilesContent(filePaths)
 			emails := parser.ParseEmails(emailTextList)
-			json := parser.JSONToIndexByUser(emails, folder)
-			indexer.IndexUserRecords(json, folder)
+			jsons := parser.JSONToIndexByUser(emails, folder)
+			for _, json := range jsons {
+				indexer.IndexUserRecords(json, folder)
+			}
 		}(folder)
 	}
 	wg.Wait()

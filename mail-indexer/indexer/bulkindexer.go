@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
@@ -12,11 +13,11 @@ import (
 func IndexUserRecords(payload string, username string) {
 	fmt.Println("start to index user record", username)
 	start := time.Now()
-	req, err := http.NewRequest("POST", "http://localhost:4080/api/_bulkv2", strings.NewReader(payload))
+	req, err := http.NewRequest("POST", os.Getenv("AWS_PUBLIC_DNS")+":4080/api/_bulkv2", strings.NewReader(payload))
 	if err != nil {
 		log.Fatal(err)
 	}
-	req.SetBasicAuth("admin", "Complexpass#123")
+	req.SetBasicAuth(os.Getenv("ZS_USER"), os.Getenv("ZS_PASSWORD"))
 	req.Header.Set("Content-Type", "application/json")
 	// req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36")
 

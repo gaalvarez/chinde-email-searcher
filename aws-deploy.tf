@@ -6,8 +6,8 @@ provider "aws" {
 
 resource "aws_instance" "example" {
   ami           = "ami-0778521d914d23bc1"
-  instance_type = "t2.micro"
-  key_name      = "personalmac"
+  instance_type = "t2.medium"
+  key_name      = var.key_pair_name
 
   vpc_security_group_ids = [aws_security_group.example.id]
 
@@ -15,7 +15,7 @@ resource "aws_instance" "example" {
     type        = "ssh"
     user        = "ubuntu"
     host        = self.public_dns
-    private_key = file("personalmac.pem")
+    private_key = file("${var.key_pair_name}.pem")
   }
 
   provisioner "file" {
@@ -45,7 +45,10 @@ resource "aws_instance" "example" {
       "sudo apt-get update",
       "sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y",
       "sudo service docker start",
-      "sudo docker compose -f /tmp/docker-compose.yml up -d"
+      "sudo mkdir /usr/local/shared/data",
+      "echo 'ZS_USER=${var.zs_user}' > /tmp/.env",
+      "echo 'ZS_PASSWORD=${var.zs_pass}' >> /tmp/.env",
+      "sudo docker compose --env-file /tmp/.env -f /tmp/docker-compose.yml up -d"
     ]
   }
 

@@ -51,13 +51,15 @@ export TF_VAR_zs_pass="zincsearch password"
 
 ### Deploy using terraform
 
+The terraform p
+
 ```sh
 terraform init
 terraform plan
 terraform apply
 ```
 
-### Identify publi IP
+### Identify public IP
 
 Open your AWS console, open the EC2 service and open the instance, copy the Public IPv4 DNS
 

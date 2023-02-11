@@ -10,9 +10,6 @@ import (
 	"time"
 )
 
-// create const for the root directory
-// const rootTest = "/Users/gustavoalvarez/Documents/personal/Truora/enron_mail_20110402/maildir/"
-
 func TestMain(t *testing.T) {
 	start := time.Now()
 	folders := files.ReadRootFolders(root)
